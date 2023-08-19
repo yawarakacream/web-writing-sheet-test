@@ -6,14 +6,34 @@
     <title>web-writing-sheet-test</title>
 
     <link rel="stylesheet" href="style.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/temporal-polyfill@0.0.8/dist/global.js"></script>
     <script type="module" src="script.js"></script>
   </head>
 
   <body>
-    <div id="information-container">
-      <div id="status">--------&gt;</div>
-      <div id="position"></div>
+    <div class="page">
+      <div id="position">position</div>
+      <div id="sheet-container">
+        <canvas id="sheet"></canvas>
+      </div>
+      <form>
+        <fieldset>
+          <legend>描画方法</legend>
+          <input type="radio" id="draw-point" name="draw" />
+          <label for="draw-point">点</label>
+          <input type="radio" id="draw-line" name="draw" checked />
+          <label for="draw-line">直線</label>
+          <input type="radio" id="draw-bezier" name="draw" />
+          <label for="draw-bezier">ベジェ曲線</label>
+        </fieldset>
+      </form>
     </div>
-    <canvas id="sheet"></canvas>
+    <div class="page">
+      <div id="time-histogram-container">
+        <canvas id="time-histogram" width="100%"></canvas>
+      </div>
+    </div>
   </body>
 </html>
