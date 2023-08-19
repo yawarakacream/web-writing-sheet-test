@@ -124,12 +124,16 @@ const main = () => {
         .splice(1)
     );
 
-    let labels = Array.from(new Set(dateDiffs));
-    labels.sort((a, b) => a - b);
+    const max = Math.max(...dateDiffs);
+
+    let labels = [...new Array(max).keys()].map((i) => i + 1);
     timeHistogram.data.labels = labels;
 
-    const data = Array(labels.length).fill(0);
-    dateDiffs.forEach((d) => data[d]++);
+    const data = labels.map(() => 0);
+    dateDiffs.forEach((d) => {
+      if (d === 0) return;
+      data[d - 1]++;
+    });
 
     timeHistogram.data.datasets[0].data = data;
 
