@@ -107,7 +107,9 @@ const main = () => {
   const startStroke = (touch) => {
     isTouching = true;
 
+    if (0 < strokes.length && strokes[strokes.length - 1].length === 0) return;
     strokes.push([]);
+
     addPointToLatestStroke(touch);
   };
 
@@ -126,14 +128,11 @@ const main = () => {
 
     const max = Math.max(...dateDiffs);
 
-    let labels = [...new Array(max).keys()].map((i) => i + 1);
+    let labels = [...new Array(max + 1).keys()];
     timeHistogram.data.labels = labels;
 
     const data = labels.map(() => 0);
-    dateDiffs.forEach((d) => {
-      if (d === 0) return;
-      data[d - 1]++;
-    });
+    dateDiffs.forEach((d) => data[d]++);
 
     timeHistogram.data.datasets[0].data = data;
 
@@ -201,6 +200,8 @@ const main = () => {
       });
     } else if (drawType === "line") {
       strokes.forEach((stroke) => {
+        if (stroke.length === 0) return;
+
         [...new Array(stroke.length - 1).keys()].forEach((i) => {
           const { x: x0, y: y0, force: force0 } = stroke[i];
           const { x: x1, y: y1, force: force1 } = stroke[i + 1];
@@ -220,6 +221,8 @@ const main = () => {
       });
     } else if (drawType === "bezier") {
       strokes.forEach((stroke) => {
+        if (stroke.length === 0) return;
+
         ctx.beginPath();
 
         ctx.strokeStyle = "#000000";
